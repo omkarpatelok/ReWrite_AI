@@ -52,7 +52,7 @@ ai-rewriter/
 ## ✨ Features
 
 - **4 tone modes**: Natural, Formal, Casual, Academic
-- **500 character limit** with live counter
+- **10,000 character limit** with live counter
 - **Copy to clipboard** button
 - **Loading skeleton** animation
 - **Error handling** for API failures

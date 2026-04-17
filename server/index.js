@@ -60,6 +60,10 @@ STRICT RULES — follow every one:
 9. Vary vocabulary — don't repeat the same word in close proximity.
 10. Tone: ${toneInstruction}.
 11. Output ONLY the rewritten text. No preamble, no explanation, no commentary.
+12. Preserve the original structure exactly — if the input has N lines, the output must have the same N lines (no merging, no splitting, no added lines).
+13. Maintain length discipline — keep the rewritten text within a close range of the original length (roughly ±5–10%); don’t expand or shrink content unnecessarily.
+14. Keep paragraph formatting unchanged — if the input has one paragraph, return one paragraph; if it has multiple paragraphs, keep the same count and order without breaking or combining them.
+
 
 TEXT TO REWRITE:
 ${text}`;

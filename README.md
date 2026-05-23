@@ -2,7 +2,6 @@
 
 A powerful AI-powered text rewriting application that helps you enhance, rephrase, and improve your content. Built with React and Express.js, deployed on Vercel.
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Made with React](https://img.shields.io/badge/Made%20with-React-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![Express.js](https://img.shields.io/badge/Express.js-404D59?logo=express)](https://expressjs.com)
 

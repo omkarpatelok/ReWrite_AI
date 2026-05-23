@@ -244,30 +244,12 @@ Contributions are welcome! Here's how you can help:
 - Write clear commit messages
 - Update documentation as needed
 
-## 🐛 Known Issues & Limitations
-
-- (Add any known issues here)
-- (Add feature limitations here)
-
-## 📝 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
 ## 📞 Support & Contact
 
 For support, feature requests, or bug reports:
-- 📧 Email: [your-email@example.com]
-- 💬 Issues: [GitHub Issues](https://github.com/yourusername/ReWrite_AI/issues)
-- 🐦 Twitter: [@yourhandle]
+- 📧 Email: omkarpatelhere@gmail.com
+- LinkeDin: https://www.linkedin.com/in/omkaarrr/
 
-## 🎯 Roadmap
-
-- [ ] Multi-language support
-- [ ] Advanced customization options
-- [ ] User authentication and saved rewrites
-- [ ] Browser extension
-- [ ] Mobile app
-- [ ] API rate limiting and analytics
 
 ## 🙏 Acknowledgments
 

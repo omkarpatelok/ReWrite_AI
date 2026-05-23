@@ -259,6 +259,6 @@ For support, feature requests, or bug reports:
 
 ---
 
-**Made with ❤️ by [Your Name/Team]**
+**Made with ❤️ by Omkar**
 
 ⭐ If you like this project, please consider giving it a star!

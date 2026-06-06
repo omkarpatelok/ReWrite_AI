@@ -2,7 +2,7 @@ const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const MODELS = [
   "meta-llama/llama-3.3-70b-instruct:free",
-  "google/gemma-2-9b-it:free"
+  "google/gemma-4-31b-it:free"
 ];
 
 async function callGemini(prompt, options = {}) {

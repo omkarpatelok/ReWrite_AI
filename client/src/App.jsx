@@ -58,7 +58,30 @@ export default function App() {
       if (!res.ok) throw new Error("Server error");
       const data = await res.json();
       if (data.error) throw new Error(data.error);
-      setOutput(data.result);
+      
+      const rewrittenResult = data.result;
+      setOutput(rewrittenResult);
+      
+      // Auto-trigger scoring on the output
+      if (rewrittenResult && rewrittenResult.trim()) {
+        setScoring(true);
+        setScoreTarget("output");
+        try {
+          const scoreRes = await fetch(`${API}/score`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: rewrittenResult }),
+          });
+          if (!scoreRes.ok) throw new Error("Auto-scoring failed");
+          const scoreData = await scoreRes.json();
+          if (scoreData.error) throw new Error(scoreData.error);
+          setScoreData({ ...scoreData, target: "output" });
+        } catch (scoreErr) {
+          console.error("Auto-scoring failed:", scoreErr);
+        } finally {
+          setScoring(false);
+        }
+      }
     } catch (err) {
       setError(err.message || "Something went wrong. Make sure the backend is running on port 3001.");
     } finally {

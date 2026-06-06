@@ -56,19 +56,20 @@ export default async (req, res) => {
 
   const toneInstruction = tonePrompt || "natural and conversational";
 
-  const prompt = `You are an expert human writer and copyeditor. Rewrite the following text to make it sound completely human, natural, and conversational. The goal is to bypass AI detection filters (like GPTZero, Turnitin) by optimizing perplexity (word choice variety) and burstiness (sentence structure variation).
+  const prompt = `You are an expert human writer and copyeditor. Rewrite the following text to make it sound completely human, natural, and conversational. Your goal is to bypass AI detection filters (like GPTZero, Turnitin) by optimizing perplexity (word choice variety) and burstiness (sentence structure variation).
 
 STRICT RULES — follow every single one:
-1. HIGH BURSTINESS: Mix very short, punchy sentences (3-8 words) with medium and longer sentences naturally. Never keep sentence lengths uniform.
-2. HIGH PERPLEXITY: Avoid predictable, cliché word choices. Use natural synonyms and idioms that a human would write.
-3. CONTRACTIONS: Use contractions (it's, don't, I've, we're, shouldn't, etc.) to sound conversational.
-4. NO AI CLICHÉS: Absolutely do not use words or phrases like: "delve", "tapestry", "testament", "beacon", "moreover", "furthermore", "leverage", "utilize", "multifaceted", "nuanced", "comprehensive", "it is worth noting", "underpins", "pivotal", "crucial", "key takeaway", "first and foremost", "demystify", "streamline", "in conclusion", "it's important to note", "in today's world", "ultimately", "essentially", "in order to".
-5. FLOW OVER STRUCTURE: Do NOT translate sentence-by-sentence. Combine, split, or restructure sentences freely so the prose flows beautifully.
-6. NO LISTS: Do NOT use bullet points or numbered lists unless the original input has them.
-7. ACTIVE VOICE: Replace passive voice (e.g., "The book was read by him") with active voice (e.g., "He read the book") wherever possible.
-8. PARAGRAPHS: Keep paragraphs short (2-4 sentences max). If the input has multiple paragraphs, preserve the same paragraph boundaries but restructure the sentences within them.
-9. TONE: ${toneInstruction}.
-10. OUTPUT ONLY: Return ONLY the rewritten text. No preamble, no explanation, no markdown blocks, no quotes.
+1. NO PREDICTABLE ESSAY STRUCTURE: Do NOT follow a standard AI essay template (e.g., Introduction -> Body -> Transition -> Ethical Warning/Limitation -> Conclusion). Break this order entirely. Reorganize the flow of ideas, merge or split thoughts, or start with the main conclusion first.
+2. INTEGRATE WARNINGS NATURALLY: If the original text contains ethical warnings, privacy warnings, or limitations, do NOT isolate them in a separate transition paragraph at the end. Either weave them organically into other sentences or remove the preachy AI tone completely.
+3. NATURAL HUMAN PHRASING: Avoid forced informal slang or slightly artificial casual words. Write in a clean, natural, and confident style — like a seasoned writer explaining a topic to a peer.
+4. HIGH BURSTINESS: Mix very short, punchy sentences (3-8 words) with medium and longer sentences naturally. Avoid uniform sentence lengths.
+5. HIGH PERPLEXITY: Avoid predictable, cliché word choices. Use natural synonyms, active verbs, and idioms that a human would write.
+6. CONTRACTIONS: Use contractions (it's, don't, I've, we're, shouldn't, etc.) freely.
+7. NO AI CLICHÉS: Absolutely do not use words or phrases like: "delve", "tapestry", "testament", "beacon", "moreover", "furthermore", "leverage", "utilize", "multifaceted", "nuanced", "comprehensive", "it is worth noting", "underpins", "pivotal", "crucial", "key takeaway", "first and foremost", "demystify", "streamline", "in conclusion", "it's important to note", "in today's world", "ultimately", "essentially", "in order to".
+8. ACTIVE VOICE: Replace passive voice with active voice wherever possible.
+9. PARAGRAPHS: Keep paragraphs short and dynamic. Feel free to combine or split paragraphs to destroy the original AI layout.
+10. TONE: ${toneInstruction}.
+11. OUTPUT ONLY: Return ONLY the rewritten text. No preamble, no explanation, no markdown blocks, no quotes.
 
 TEXT TO REWRITE:
 ${text}`;

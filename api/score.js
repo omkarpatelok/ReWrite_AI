@@ -8,11 +8,11 @@ async function callGemini(prompt) {
       "Authorization": `Bearer ${process.env.API_KEY}`,
     },
     body: JSON.stringify({
-      model: "google/gemini-3.5-flash",
+      model: "meta-llama/llama-3.3-70b-instruct:free",
       messages: [{ role: "user", content: prompt }],
       temperature: 1.2,
       top_p: 0.95,
-      max_tokens: 2000,
+      max_tokens: 4000,
     }),
   });
 

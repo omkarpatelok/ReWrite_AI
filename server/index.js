@@ -9,31 +9,54 @@ app.use(express.json());
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
-async function callGemini(prompt) {
-  const response = await fetch(OPENROUTER_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${process.env.API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "meta-llama/llama-3.3-70b-instruct:free",
-      messages: [{ role: "user", content: prompt }],
-      temperature: 1.2,
-      top_p: 0.95,
-      max_tokens: 4000,
-    }),
-  });
+const MODELS = [
+  "meta-llama/llama-3.3-70b-instruct:free",
+  "google/gemma-2-9b-it:free"
+];
 
-  if (!response.ok) {
-    const errData = await response.json();
-    console.error("OpenRouter API error:", errData);
-    throw new Error(errData.error?.message || "API error");
+async function callGemini(prompt, options = {}) {
+  const { temperature = 0.7, max_tokens = 4000 } = options;
+  let lastError;
+
+  for (const model of MODELS) {
+    try {
+      console.log(`Attempting request with model: ${model}`);
+      const response = await fetch(OPENROUTER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [{ role: "user", content: prompt }],
+          temperature: temperature,
+          max_tokens: max_tokens,
+        }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        console.error(`Error from model ${model}:`, errData);
+        throw new Error(errData.error?.message || "API error");
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content;
+      if (content) {
+        return content;
+      } else {
+        throw new Error("Empty response content");
+      }
+    } catch (err) {
+      console.warn(`Model ${model} failed: ${err.message}. Trying next model...`);
+      lastError = err;
+    }
   }
 
-  const data = await response.json();
-  return data.choices?.[0]?.message?.content || "";
+  throw new Error(lastError ? lastError.message : "All fallback models failed");
 }
+
 
 // ── /rewrite ────────────────────────────────────────────────────────────────
 app.post("/rewrite", async (req, res) => {
@@ -66,7 +89,7 @@ TEXT TO REWRITE:
 ${text}`;
 
   try {
-    const result = await callGemini(prompt);
+    const result = await callGemini(prompt, { temperature: 0.7, max_tokens: 4000 });
     res.json({ result });
   } catch (err) {
     res.status(500).json({ error: err.message || "Something went wrong" });
@@ -98,7 +121,7 @@ TEXT TO ANALYZE:
 ${text}`;
 
   try {
-    let raw = await callGemini(prompt);
+    let raw = await callGemini(prompt, { temperature: 0.1, max_tokens: 1500 });
     raw = raw.replace(/```json\n?|```\n?/g, "").trim();
     
     // Extract JSON if wrapped in other text

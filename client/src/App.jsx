@@ -55,9 +55,18 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: input, tonePrompt: selectedTone.prompt }),
       });
-      if (!res.ok) throw new Error("Server error");
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        if (!res.ok) throw new Error(`Server error (${res.status})`);
+        throw jsonErr;
+      }
+      
+      if (!res.ok) {
+        throw new Error(data.error || `Server error (${res.status})`);
+      }
       
       const rewrittenResult = data.result;
       setOutput(rewrittenResult);
@@ -72,12 +81,23 @@ export default function App() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: rewrittenResult }),
           });
-          if (!scoreRes.ok) throw new Error("Auto-scoring failed");
-          const scoreData = await scoreRes.json();
-          if (scoreData.error) throw new Error(scoreData.error);
+          
+          let scoreData;
+          try {
+            scoreData = await scoreRes.json();
+          } catch (jsonErr) {
+            if (!scoreRes.ok) throw new Error(`Auto-scoring failed (${scoreRes.status})`);
+            throw jsonErr;
+          }
+          
+          if (!scoreRes.ok) {
+            throw new Error(scoreData.error || `Auto-scoring failed (${scoreRes.status})`);
+          }
+          
           setScoreData({ ...scoreData, target: "output" });
         } catch (scoreErr) {
           console.error("Auto-scoring failed:", scoreErr);
+          setError("Auto-scoring failed: " + scoreErr.message);
         } finally {
           setScoring(false);
         }
@@ -103,9 +123,19 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
       });
-      if (!res.ok) throw new Error("Scoring failed");
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        if (!res.ok) throw new Error(`Scoring failed (${res.status})`);
+        throw jsonErr;
+      }
+      
+      if (!res.ok) {
+        throw new Error(data.error || `Scoring failed (${res.status})`);
+      }
+      
       setScoreData({ ...data, target });
     } catch (err) {
       setError("Scoring error: " + (err.message || "Unknown"));
